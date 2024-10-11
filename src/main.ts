@@ -10,26 +10,27 @@ let defGrowRate = 1;
 let aBought = 0;
 let bBought = 0;
 let cBought = 0;
+let dBought = 0;
+let eBought = 0;
 const upgrade_increase_factor = 1.15;
 
 const upgradeButtons: HTMLButtonElement[] = [];
 const boughtDisplays: HTMLElement[] = [];
 
-
 interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Dream Weaver", cost: 10, rate: 0.1 },
-  { name: "Star Gazer", cost: 100, rate: 2 },
-  { name: "Counting Chant", cost: 1000, rate: 50 },
+  { name: "Dream Weaver", cost: 10, rate: 0.1, description: "Enhances your sheep-dreaming power."},
+  { name: "Moonlit Meander", cost: 50, rate: 1, description: "Harness the calming glow of moonlight to steady your counting." },
+  { name: "Star Gazer", cost: 100, rate: 2, description: "Unleash the celestial magic to illuminate your counting path." },
+  { name: "Nighttime Navigator", cost: 500, rate: 10, description: "Chart the constellations to find the optimal counting route." },
+  { name: "Counting Chant", cost: 1000, rate: 50, description: "Boosts the rhythm of your counting." },
 ];
-
-
-
 
 // Title Card
 const header = document.createElement("h1");
@@ -67,8 +68,6 @@ shop_div.style.display = "flex";
 shop_div.style.justifyContent = "space-between";
 shop_div.style.gap = "20px";
 
-
-
 // Upgrade buttons
 availableItems.forEach((item) => {
   let button_emoji = "";
@@ -78,11 +77,15 @@ availableItems.forEach((item) => {
     button_emoji = "✨";
   } else if (item.name === "Counting Chant") {
     button_emoji = "🎺";
+  } else if (item.name === "Moonlit Meander") {
+    button_emoji = "🌙";
+  } else if (item.name === "Nighttime Navigator") {
+    button_emoji = "🧭";
   }
 
   const upgrade_button = document.createElement("button");
   upgrade_button.innerHTML = button_emoji;
-  upgrade_button.disabled = true; 
+  upgrade_button.disabled = true;
 
   const upgrade_div = document.createElement("div");
   upgrade_div.style.textAlign = "center";
@@ -100,7 +103,13 @@ availableItems.forEach((item) => {
     bought_display.innerHTML = `Star Gazer Bought: ${bBought}`;
   } else if (item.name === "Counting Chant") {
     bought_display.innerHTML = `Counting Chant Bought: ${cBought}`;
+  } else if (item.name === "Moonlit Meander") {
+    bought_display.innerHTML = `Moonlit Meander Bought: ${dBought}`;
+  } else if (item.name === "Nighttime Navigator") {
+    bought_display.innerHTML = `Nighttime Navigator Bought: ${eBought}`;
   }
+
+
   boughtDisplays.push(bought_display);
   app.append(bought_display);
 
@@ -122,6 +131,14 @@ availableItems.forEach((item) => {
         cBought++;
         item.cost *= upgrade_increase_factor;
         bought_display.innerHTML = `Counting Chant Bought: ${cBought}`;
+      } else if (item.name === "Moonlit Meander") {
+        dBought++;
+        item.cost *= upgrade_increase_factor;
+        bought_display.innerHTML = `Moonlit Meander Bought: ${dBought}`;
+      } else if (item.name === "Nighttime Navigator") {
+        eBought++;
+        item.cost *= upgrade_increase_factor;
+        bought_display.innerHTML = `Nighttime Navigator Bought: ${eBought}`;
       }
 
       count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
@@ -161,7 +178,6 @@ sheep_button.addEventListener("click", () => {
   count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
   checkUpgrade();
 });
-
 
 function checkUpgrade() {
   availableItems.forEach((item, index) => {

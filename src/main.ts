@@ -33,7 +33,7 @@ app.append(sheep_button);
 // Shop Title
 const shop_title = document.createElement("h2");
 shop_title.innerHTML = "Shop";
-shop_title.style.marginTop = "20px"; 
+shop_title.style.marginTop = "20px";
 app.append(shop_title);
 
 // Create shop container div with flex display
@@ -59,10 +59,9 @@ const upgrade_button_c = document.createElement("button");
 upgrade_button_c.innerHTML = upgrade_emoji_c;
 upgrade_button_c.disabled = true;
 
-
 // Dream Weaver Upgrade
 const upgrade_a_div = document.createElement("div");
-upgrade_a_div.style.textAlign = "center"; 
+upgrade_a_div.style.textAlign = "center";
 const upgrade_a_label = document.createElement("div");
 upgrade_a_label.innerHTML = "Dream Weaver";
 upgrade_a_div.append(upgrade_button_a);
@@ -70,7 +69,7 @@ upgrade_a_div.append(upgrade_a_label);
 
 // B Upgrade
 const upgrade_b_div = document.createElement("div");
-upgrade_b_div.style.textAlign = "center"; 
+upgrade_b_div.style.textAlign = "center";
 const upgrade_b_label = document.createElement("div");
 upgrade_b_label.innerHTML = "Star Gazer";
 upgrade_b_div.append(upgrade_button_b);
@@ -78,7 +77,7 @@ upgrade_b_div.append(upgrade_b_label);
 
 // C Upgrade
 const upgrade_c_div = document.createElement("div");
-upgrade_c_div.style.textAlign = "center"; 
+upgrade_c_div.style.textAlign = "center";
 const upgrade_c_label = document.createElement("div");
 upgrade_c_label.innerHTML = "Counting Chant";
 upgrade_c_div.append(upgrade_button_c);
@@ -90,7 +89,7 @@ shop_div.append(upgrade_c_div);
 
 app.append(shop_div);
 
-// Statistics 
+// Statistics
 const stats_div = document.createElement("div");
 const stats_title = document.createElement("h2");
 stats_title.innerHTML = "Statistics";
@@ -111,7 +110,7 @@ stats_div.append(c_bought_display);
 
 // Sheep counter
 const count_display = document.createElement("div");
-count_display.style.marginTop = "20px"; 
+count_display.style.marginTop = "20px";
 count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
 stats_div.append(count_display);
 

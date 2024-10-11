@@ -10,6 +10,26 @@ let defGrowRate = 1;
 let aBought = 0;
 let bBought = 0;
 let cBought = 0;
+const upgrade_increase_factor = 1.15;
+
+const upgradeButtons: HTMLButtonElement[] = [];
+const boughtDisplays: HTMLElement[] = [];
+
+
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
+
+const availableItems: Item[] = [
+  { name: "Dream Weaver", cost: 10, rate: 0.1 },
+  { name: "Star Gazer", cost: 100, rate: 2 },
+  { name: "Counting Chant", cost: 1000, rate: 50 },
+];
+
+
+
 
 // Title Card
 const header = document.createElement("h1");
@@ -26,11 +46,11 @@ sheep_button.style.height = "100px";
 // Main Sheep Emoji
 const sheep_emoji = document.createElement("div");
 sheep_emoji.innerHTML = "🐑";
-sheep_emoji.style.fontSize = "50px"; 
-sheep_emoji.style.display = "flex";  
-sheep_emoji.style.justifyContent = "center"; 
-sheep_emoji.style.alignItems = "center"; 
-sheep_emoji.style.height = "100%"; 
+sheep_emoji.style.fontSize = "50px";
+sheep_emoji.style.display = "flex";
+sheep_emoji.style.justifyContent = "center";
+sheep_emoji.style.alignItems = "center";
+sheep_emoji.style.height = "100%";
 
 sheep_button.append(sheep_emoji);
 app.append(sheep_button);
@@ -41,56 +61,78 @@ shop_title.innerHTML = "Shop";
 shop_title.style.marginTop = "20px";
 app.append(shop_title);
 
-// shop container div
+// Shop container div
 const shop_div = document.createElement("div");
-shop_div.style.display = "flex"; 
-shop_div.style.justifyContent = "space-between"; 
-shop_div.style.gap = "20px"; 
+shop_div.style.display = "flex";
+shop_div.style.justifyContent = "space-between";
+shop_div.style.gap = "20px";
 
-// Upgrade buttons with labels
-const upgrade_emoji_a = "🪄";
-const upgrade_emoji_b = "✨";
-const upgrade_emoji_c = "🎺";
 
-const upgrade_button_a = document.createElement("button");
-upgrade_button_a.innerHTML = upgrade_emoji_a;
-upgrade_button_a.disabled = true;
 
-const upgrade_button_b = document.createElement("button");
-upgrade_button_b.innerHTML = upgrade_emoji_b;
-upgrade_button_b.disabled = true;
+// Upgrade buttons
+availableItems.forEach((item) => {
+  let button_emoji = "";
+  if (item.name === "Dream Weaver") {
+    button_emoji = "🪄";
+  } else if (item.name === "Star Gazer") {
+    button_emoji = "✨";
+  } else if (item.name === "Counting Chant") {
+    button_emoji = "🎺";
+  }
 
-const upgrade_button_c = document.createElement("button");
-upgrade_button_c.innerHTML = upgrade_emoji_c;
-upgrade_button_c.disabled = true;
+  const upgrade_button = document.createElement("button");
+  upgrade_button.innerHTML = button_emoji;
+  upgrade_button.disabled = true; 
 
-// Dream Weaver Upgrade
-const upgrade_a_div = document.createElement("div");
-upgrade_a_div.style.textAlign = "center";
-const upgrade_a_label = document.createElement("div");
-upgrade_a_label.innerHTML = "Dream Weaver";
-upgrade_a_div.append(upgrade_button_a);
-upgrade_a_div.append(upgrade_a_label);
+  const upgrade_div = document.createElement("div");
+  upgrade_div.style.textAlign = "center";
+  const upgrade_label = document.createElement("div");
+  upgrade_label.innerHTML = item.name;
+  upgrade_div.append(upgrade_button);
+  upgrade_div.append(upgrade_label);
 
-// Star Gazer Upgrade
-const upgrade_b_div = document.createElement("div");
-upgrade_b_div.style.textAlign = "center";
-const upgrade_b_label = document.createElement("div");
-upgrade_b_label.innerHTML = "Star Gazer";
-upgrade_b_div.append(upgrade_button_b);
-upgrade_b_div.append(upgrade_b_label);
+  shop_div.append(upgrade_div);
 
-// Counting Chant Upgrade
-const upgrade_c_div = document.createElement("div");
-upgrade_c_div.style.textAlign = "center";
-const upgrade_c_label = document.createElement("div");
-upgrade_c_label.innerHTML = "Counting Chant";
-upgrade_c_div.append(upgrade_button_c);
-upgrade_c_div.append(upgrade_c_label);
+  const bought_display = document.createElement("div");
+  if (item.name === "Dream Weaver") {
+    bought_display.innerHTML = `Dream Weaver Bought: ${aBought}`;
+  } else if (item.name === "Star Gazer") {
+    bought_display.innerHTML = `Star Gazer Bought: ${bBought}`;
+  } else if (item.name === "Counting Chant") {
+    bought_display.innerHTML = `Counting Chant Bought: ${cBought}`;
+  }
+  boughtDisplays.push(bought_display);
+  app.append(bought_display);
 
-shop_div.append(upgrade_a_div);
-shop_div.append(upgrade_b_div);
-shop_div.append(upgrade_c_div);
+  // Upgrade button listener
+  upgrade_button.addEventListener("click", () => {
+    if (ct >= item.cost) {
+      ct -= item.cost;
+      defGrowRate += item.rate;
+
+      if (item.name === "Dream Weaver") {
+        aBought++;
+        item.cost *= upgrade_increase_factor;
+        bought_display.innerHTML = `Dream Weaver Bought: ${aBought}`;
+      } else if (item.name === "Star Gazer") {
+        bBought++;
+        item.cost *= upgrade_increase_factor;
+        bought_display.innerHTML = `Star Gazer Bought: ${bBought}`;
+      } else if (item.name === "Counting Chant") {
+        cBought++;
+        item.cost *= upgrade_increase_factor;
+        bought_display.innerHTML = `Counting Chant Bought: ${cBought}`;
+      }
+
+      count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
+      growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
+      checkUpgrade();
+    }
+  });
+
+  // put buttons in array
+  upgradeButtons.push(upgrade_button);
+});
 
 app.append(shop_div);
 
@@ -100,20 +142,7 @@ const stats_title = document.createElement("h2");
 stats_title.innerHTML = "Statistics";
 stats_div.append(stats_title);
 
-// Bought counters
-const a_bought_display = document.createElement("div");
-const b_bought_display = document.createElement("div");
-const c_bought_display = document.createElement("div");
-
-a_bought_display.innerHTML = `Dream Weaver Bought: ${aBought}`;
-b_bought_display.innerHTML = `Star Gazer Bought: ${bBought}`;
-c_bought_display.innerHTML = `Counting Chant Bought: ${cBought}`;
-
-stats_div.append(a_bought_display);
-stats_div.append(b_bought_display);
-stats_div.append(c_bought_display);
-
-// Sheep counter
+// Sheep counter display
 const count_display = document.createElement("div");
 count_display.style.marginTop = "20px";
 count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
@@ -133,79 +162,21 @@ sheep_button.addEventListener("click", () => {
   checkUpgrade();
 });
 
-let upgrade_a_cost = 10;
-let upgrade_b_cost = 100;
-let upgrade_c_cost = 1000;
 
-// lil bit of Extract Function (106) happening here
 function checkUpgrade() {
-  if (ct >= upgrade_a_cost) {
-    upgrade_button_a.disabled = false;
-  } else {
-    upgrade_button_a.disabled = true;
-  }
-  if (ct >= upgrade_b_cost) {
-    upgrade_button_b.disabled = false;
-  } else {
-    upgrade_button_b.disabled = true;
-  }
-  if (ct >= upgrade_c_cost) {
-    upgrade_button_c.disabled = false;
-  } else {
-    upgrade_button_c.disabled = true;
-  }
+  availableItems.forEach((item, index) => {
+    if (ct >= item.cost) {
+      upgradeButtons[index].disabled = false;
+    } else {
+      upgradeButtons[index].disabled = true;
+    }
+  });
 }
-
-const upgrade_increase_factor = 1.15;
-
-// Upgrade button listeners
-upgrade_button_a.addEventListener("click", () => {
-  if (ct >= upgrade_a_cost) {
-    ct -= upgrade_a_cost;
-    defGrowRate += 0.1;
-    aBought++;
-    upgrade_a_cost *= upgrade_increase_factor;
-
-    count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
-    a_bought_display.innerHTML = `Bought: ${aBought}`;
-    growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
-    checkUpgrade();
-  }
-});
-
-upgrade_button_b.addEventListener("click", () => {
-  if (ct >= upgrade_b_cost) {
-    ct -= upgrade_b_cost;
-    defGrowRate += 2;
-    bBought++;
-    upgrade_b_cost *= upgrade_increase_factor;
-
-    count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
-    b_bought_display.innerHTML = `Bought: ${bBought}`;
-    growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
-    checkUpgrade();
-  }
-});
-
-upgrade_button_c.addEventListener("click", () => {
-  if (ct >= upgrade_c_cost) {
-    ct -= upgrade_c_cost;
-    defGrowRate += 50;
-    cBought++;
-    upgrade_c_cost *= upgrade_increase_factor;
-
-    count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
-    c_bought_display.innerHTML = `Bought: ${cBought}`;
-    growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
-    checkUpgrade();
-  }
-});
 
 // Continuous Growth
 let lastFrameT = performance.now();
 
 function updateCounter(time: number) {
-  // time diff between frames
   const deltaT = (time - lastFrameT) / 1000;
   lastFrameT = time;
 

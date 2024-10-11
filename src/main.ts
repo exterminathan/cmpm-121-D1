@@ -80,31 +80,43 @@ sheep_button.addEventListener("click", () => {
   checkUpgrade();
 });
 
+let upgrade_a_cost = 10;
+let upgrade_b_cost = 100;
+let upgrade_c_cost = 1000;
+
 // lil bit of Extract Function (106) happening here
 function checkUpgrade() {
-  if (ct >= 10) {
+  if (ct >= upgrade_a_cost) {
     upgrade_button_a.disabled = false;
   } else {
     upgrade_button_a.disabled = true;
   }
-  if (ct >= 100) {
+  if (ct >= upgrade_b_cost) {
     upgrade_button_b.disabled = false;
   } else {
     upgrade_button_b.disabled = true;
   }
-  if (ct >= 1000) {
+  if (ct >= upgrade_c_cost) {
     upgrade_button_c.disabled = false;
   } else {
     upgrade_button_c.disabled = true;
   }
 }
 
+
+
+const upgrade_increase_factor = 1.15;
+
+
+
 // Upgrade button listeners
 upgrade_button_a.addEventListener("click", () => {
-  if (ct >= 10) {
-    ct -= 10;
+  if (ct >= upgrade_a_cost) {
+    ct -= upgrade_a_cost;
     defGrowRate += 0.1;
     aBought++;
+    upgrade_a_cost *= upgrade_increase_factor;
+
     count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
     a_bought_display.innerHTML = `Bought: ${aBought}`;
     growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
@@ -113,10 +125,12 @@ upgrade_button_a.addEventListener("click", () => {
 });
 
 upgrade_button_b.addEventListener("click", () => {
-  if (ct >= 100) {
-    ct -= 100;
+  if (ct >= upgrade_b_cost) {
+    ct -= upgrade_b_cost;
     defGrowRate += 2;
     bBought++;
+    upgrade_b_cost *= upgrade_increase_factor;
+
     count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
     b_bought_display.innerHTML = `Bought: ${bBought}`;
     growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;
@@ -125,10 +139,13 @@ upgrade_button_b.addEventListener("click", () => {
 });
 
 upgrade_button_c.addEventListener("click", () => {
-  if (ct >= 1000) {
-    ct -= 1000;
+  if (ct >= upgrade_c_cost) {
+    ct -= upgrade_c_cost;
     defGrowRate += 50;
     cBought++;
+    upgrade_c_cost *= upgrade_increase_factor;
+
+
     count_display.innerHTML = `${ct.toFixed(1)} Sheep Counted`;
     c_bought_display.innerHTML = `Bought: ${cBought}`;
     growth_rate_display.innerHTML = `Current Growth Rate: ${defGrowRate.toFixed(1)} sheep/sec`;

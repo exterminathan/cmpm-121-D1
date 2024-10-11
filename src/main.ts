@@ -5,7 +5,6 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Sheep Counter";
 document.title = gameName;
 
-// Important Values
 let ct = 0;
 let defGrowRate = 1;
 let aBought = 0;
@@ -21,13 +20,19 @@ app.append(header);
 const sheep_button = document.createElement("button");
 sheep_button.style.padding = "0";
 sheep_button.style.border = "none";
+sheep_button.style.width = "100px";
+sheep_button.style.height = "100px";
 
-const sheep_image = document.createElement("img");
-sheep_image.src = "src/images/sheep.png";
-sheep_image.style.width = "100px";
-sheep_image.style.height = "100px";
+// Main Sheep Emoji
+const sheep_emoji = document.createElement("div");
+sheep_emoji.innerHTML = "🐑";
+sheep_emoji.style.fontSize = "50px"; 
+sheep_emoji.style.display = "flex";  
+sheep_emoji.style.justifyContent = "center"; 
+sheep_emoji.style.alignItems = "center"; 
+sheep_emoji.style.height = "100%"; 
 
-sheep_button.append(sheep_image);
+sheep_button.append(sheep_emoji);
 app.append(sheep_button);
 
 // Shop Title
@@ -36,11 +41,11 @@ shop_title.innerHTML = "Shop";
 shop_title.style.marginTop = "20px";
 app.append(shop_title);
 
-// Create shop container div with flex display
+// shop container div
 const shop_div = document.createElement("div");
-shop_div.style.display = "flex"; // Make the buttons display side by side
-shop_div.style.justifyContent = "space-between"; // Space them evenly
-shop_div.style.gap = "20px"; // Add some spacing between buttons
+shop_div.style.display = "flex"; 
+shop_div.style.justifyContent = "space-between"; 
+shop_div.style.gap = "20px"; 
 
 // Upgrade buttons with labels
 const upgrade_emoji_a = "🪄";
@@ -67,7 +72,7 @@ upgrade_a_label.innerHTML = "Dream Weaver";
 upgrade_a_div.append(upgrade_button_a);
 upgrade_a_div.append(upgrade_a_label);
 
-// B Upgrade
+// Star Gazer Upgrade
 const upgrade_b_div = document.createElement("div");
 upgrade_b_div.style.textAlign = "center";
 const upgrade_b_label = document.createElement("div");
@@ -75,7 +80,7 @@ upgrade_b_label.innerHTML = "Star Gazer";
 upgrade_b_div.append(upgrade_button_b);
 upgrade_b_div.append(upgrade_b_label);
 
-// C Upgrade
+// Counting Chant Upgrade
 const upgrade_c_div = document.createElement("div");
 upgrade_c_div.style.textAlign = "center";
 const upgrade_c_label = document.createElement("div");

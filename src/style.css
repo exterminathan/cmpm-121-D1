@@ -37,10 +37,54 @@ h1 {
 }
 
 #app {
+  display: flex;
+  justify-content: space-between;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  gap: 20px;
+}
+
+.left-panel {
+  background-color: #7c2121;
+  border-radius: 15px;
+  width: 40%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; 
+  padding-bottom: 40px;
+}
+
+.right-panel {
+  background-color: #5056bb;
+  border-radius: 15px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+
+.sheep-counter-container {
+  margin-top: 20px;
+}
+
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 button {
@@ -51,11 +95,25 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  color: #fff;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s, border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+
+button:disabled {
+  background-color: #555;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+button:enabled {
+  background-color: 1a1a1a;
+  color: #000;
+}
+
+button:hover:enabled {
+  background-color: #0c0c0c;
+  border-color: #ff8f00;
 }
 button:focus,
 button:focus-visible {

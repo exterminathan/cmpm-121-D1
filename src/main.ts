@@ -1,3 +1,7 @@
+//Credits:
+// App panel idea: CJ Moshy - https://cjmoshy.github.io/cmpm-121-demo-1/
+
+
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
@@ -35,13 +39,15 @@ const availableItems: Item[] = [
     name: "Moonlit Meander",
     cost: 50,
     rate: 1,
-    description: "Harness the calming glow of moonlight to steady your counting.",
+    description:
+      "Harness the calming glow of moonlight to steady your counting.",
   },
   {
     name: "Star Gazer",
     cost: 100,
     rate: 2,
-    description: "Unleash the celestial magic to illuminate your counting path.",
+    description:
+      "Unleash the celestial magic to illuminate your counting path.",
   },
   {
     name: "Nighttime Navigator",
@@ -120,7 +126,7 @@ availableItems.forEach((item) => {
   upgrade_div.classList.add("shop-item"); // Apply styling for layout
   const upgrade_label = document.createElement("div");
   upgrade_label.innerHTML = item.name;
-  
+
   upgrade_div.append(upgrade_button); // Add button first
   upgrade_div.append(upgrade_label); // Add label to the right of the button
 

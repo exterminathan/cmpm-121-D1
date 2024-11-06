@@ -1,3 +1,7 @@
+/*Credits:
+ Panel CSS and button changes: https://ishachury20.github.io/cmpm-121-demo-1/
+*/
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -55,7 +59,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px; 
+  padding: 20px;
   padding-bottom: 40px;
 }
 
@@ -69,7 +73,6 @@ h1 {
   padding: 20px;
   padding-bottom: 40px;
 }
-
 
 .sheep-counter-container {
   margin-top: 20px;
@@ -97,7 +100,9 @@ button {
   background-color: #1a1a1a;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.25s, border-color 0.25s;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s;
 }
 
 button:disabled {
